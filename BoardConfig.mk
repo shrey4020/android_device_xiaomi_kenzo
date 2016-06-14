@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2015 The CyanogenMod Project
+# Copyright (C) 2016 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 DEVICE_PATH := device/xiaomi/kenzo
 
-TARGET_SPECIFIC_HEADER_PATH := device/xiaomi/kenzo/include
+TARGET_SPECIFIC_HEADER_PATH := $(DEVICE_PATH)/include
 
 # Architecture
 TARGET_ARCH := arm64
@@ -46,16 +46,15 @@ TARGET_NO_BOOTLOADER := true
 # Kernel
 BOARD_DTBTOOL_ARGS := -2
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 earlyprintk
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x00000100
 BOARD_RAMDISK_OFFSET := 0x02000000
 TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8956
-TARGET_KERNEL_CONFIG := cyanogenmod_kenzo_defconfig
+TARGET_KERNEL_SOURCE := kernel/xiaomi/kenzo
+TARGET_KERNEL_CONFIG := kenzo_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-TARGET_USES_UNCOMPRESSED_KERNEL := true
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -91,7 +90,6 @@ BOARD_QTI_CAMERA_32BIT_ONLY := true
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
-BOARD_HAL_STATIC_LIBRARIES += libhealthd.msm8952
 
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
@@ -138,8 +136,6 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 26838785024 # 26838801408 - 16384
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 
 # GPS
-USE_DEVICE_SPECIFIC_GPS := true
-USE_DEVICE_SPECIFIC_LOC_API := true
 TARGET_NO_RPC := true
 
 # Init
@@ -194,6 +190,13 @@ WIFI_DRIVER_FW_PATH_AP      := "ap"
 WIFI_DRIVER_FW_PATH_STA     := "sta"
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/wlan.ko"
 WIFI_DRIVER_MODULE_NAME     := "wlan"
+
+# FM
+TARGET_QCOM_NO_FM_FIRMWARE := true
+
+# Releasetools
+ADD_RADIO_FILES := true
+TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # inherit from the proprietary version
 -include vendor/xiaomi/kenzo/BoardConfigVendor.mk

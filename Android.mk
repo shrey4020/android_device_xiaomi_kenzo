@@ -34,7 +34,8 @@ include $(CLEAR_VARS)
 
 ADSP_IMAGES := \
     adsp.b00 adsp.b01 adsp.b02 adsp.b03 adsp.b04 adsp.b05 adsp.b06 adsp.b07 \
-    adsp.b08 adsp.b09 adsp.b10 adsp.b11 adsp.mbn adsp.mdt
+    adsp.b08 adsp.b09 adsp.b10 adsp.b11 adsp.b12 adsp.b13 adsp.b14 adsp.mbn \
+    adsp.mdt
 
 ADSP_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/firmware/,$(notdir $(ADSP_IMAGES)))
 $(ADSP_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -84,6 +85,19 @@ $(CPE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /firmware/image/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(CPE_SYMLINKS)
+
+FPC_IMAGES := \
+    fingerpr.b00 fingerpr.b01 fingerpr.b02 fingerpr.b03 fingerpr.mdt \
+    fpcfinge.b00 fpcfinge.b01 fpcfinge.b02 fpcfinge.b03 fpcfinge.mdt
+
+FPC_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(FPC_IMAGES)))
+$(FPC_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "FPC firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(FPC_SYMLINKS)
 
 ISDB_IMAGES := \
     isdbtmm.b00 isdbtmm.b01 isdbtmm.b02 isdbtmm.b03 isdbtmm.mdt
@@ -135,7 +149,7 @@ ALL_DEFAULT_INSTALLED_MODULES += $(MDTP_SYMLINKS)
 MODEM_IMAGES := \
     modem.b00 modem.b01 modem.b02 modem.b04 modem.b05 modem.b06 \
     modem.b07 modem.b08 modem.b09 modem.b10 modem.b11 modem.b12 \
-    modem.b13 modem.b16 modem.b17 modem.b18 modem.b19 modem.b20 modem.mdt
+    modem.b13 modem.b16 modem.b17 modem.b20 modem.mdt
 
 MODEM_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(MODEM_IMAGES)))
 $(MODEM_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -159,7 +173,7 @@ $(PLAYREADY_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 ALL_DEFAULT_INSTALLED_MODULES += $(PLAYREADY_SYMLINKS)
 
 QDSP6M_IMAGES := \
-    qdsp6m.qdp
+    qdsp6m.qdb
 
 QDSP6M_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(QDSP6M_IMAGES)))
 $(QDSP6M_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -170,8 +184,32 @@ $(QDSP6M_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(QDSP6M_SYMLINKS)
 
+SAMPLE_IMAGES := \
+    sampleap.b00 sampleap.b01 sampleap.b02 sampleap.b03 sampleap.mdt
+
+SAMPLE_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(SAMPLE_IMAGES)))
+$(SAMPLE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "SAMPLE firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(SAMPLE_SYMLINKS)
+
+SEC_IMAGES := \
+    secauth.b00 secauth.b01 secauth.b02 secauth.b03 secauth.mdt
+
+SEC_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(SEC_IMAGES)))
+$(SEC_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	@echo "SEC firmware link: $@"
+	@mkdir -p $(dir $@)
+	@rm -rf $@
+	$(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(SEC_SYMLINKS)
+
 TQS_IMAGES := \
-    tqs.b00 tqs.b01 tqs.b03 tqs.mdt
+    tqs.b00 tqs.b01 tqs.b02 tqs.b03 tqs.mdt
 
 TQS_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(TQS_IMAGES)))
 $(TQS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
@@ -206,19 +244,6 @@ $(WV_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /firmware/image/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(WV_SYMLINKS)
-
-# IMS lib symlink
-
-IMS_LIBS := libimscamera_jni.so libimsmedia_jni.so
-
-IMS_SYMLINKS := $(addprefix $(TARGET_OUT)/app/ims/lib/arm64/,$(notdir $(IMS_LIBS)))
-$(IMS_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "IMS lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /system/vendor/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(IMS_SYMLINKS)
 
 # Create a link for the WCNSS config file, which ends up as a writable
 # version in /data/misc/wifi
