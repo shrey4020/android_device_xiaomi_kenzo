@@ -32,6 +32,7 @@ image_partitions = {
    'hyp.mbn'           : 'hyp',
    'splash.img'        : 'splash',
    'devinfo.img'       : 'devinfo',
+   'NON-HLOS.bin'      : 'modem',
 }
 
 def FullOTA_InstallEnd(info):
