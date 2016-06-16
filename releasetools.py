@@ -23,16 +23,18 @@ def IncrementalOTA_Assertions(info):
   pass
 
 image_partitions = {
+   'adspso.bin'        : 'dsp',
    'cmnlib.mbn'        : 'cmnlib',
-   'rpm.mbn'           : 'rpm',
-   'tz.mbn'            : 'tz',
-   'emmc_appsboot.mbn' : 'aboot',
-   'sbl1.mbn'          : 'sbl1',
-   'keymaster.mbn'     : 'keymaster',
-   'hyp.mbn'           : 'hyp',
-   'splash.img'        : 'splash',
    'devinfo.img'       : 'devinfo',
+   'emmc_appsboot.mbn' : 'aboot',
+   'hyp.mbn'           : 'hyp',
+   'keymaster.mbn'     : 'keymaster',
+   'mdtp.img'          : 'mdtp',
    'NON-HLOS.bin'      : 'modem',
+   'rpm.mbn'           : 'rpm',
+   'sbl1.mbn'          : 'sbl1',
+   'splash.img'        : 'splash',
+   'tz.mbn'            : 'tz',
 }
 
 def FullOTA_InstallEnd(info):
